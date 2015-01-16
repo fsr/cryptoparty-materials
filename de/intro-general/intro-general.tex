@@ -1,0 +1,126 @@
+\documentclass{beamer}
+\input{../../tex-inc/beamer/pre-lang.tex}
+\input{../tex-inc/beamer/lang.tex}
+\input{../../tex-inc/beamer/post-lang.tex}
+
+\title{Cryptoparty: Einführung}
+\subtitle{Eine Einführung in E-Mail-Sicherheit mit GPG}
+\author{iFSR TU Dresden}
+
+\newcommand{\alice}[1][1cm]{\includegraphics[width=#1]{img-src/alice.pdf}}
+\newcommand{\bob}[1][1cm]{\includegraphics[width=#1]{img-src/bob.pdf}}
+
+\begin{document}
+
+\begin{frame}
+  \maketitle
+\end{frame}
+
+\begin{frame}
+  \frametitle{Das Konzept für E-Mail-Sicherheit mit GPG}
+  \begin{block}{Übertragung}
+    \begin{center}
+      \begin{tikzpicture}
+        \path (0,0) node (alice) {\alice};
+        \path (1.5,0) node (gpg-alice) {GPG};
+        \path (8.5,0) node (gpg-bob) {GPG};
+        \path (10,0) node (bob) {\bob};
+
+
+        \draw[-latex] (alice) -- (gpg-alice);
+        \draw[-latex,double] (gpg-alice) -- (gpg-bob);
+        \draw[-latex] (gpg-bob) -- (bob);
+
+        \path (5,0) node [draw,fill=white, cloud, cloud puffs=14, minimum width=3.5cm, minimum height=2cm] (internet) {};
+        \path (internet) node[yshift=0.25cm] {Internet};
+      \end{tikzpicture}
+    \end{center}
+    \begin{itemize}
+    \item GPG bei Alice: verschlüsselt und signiert
+    \item GPG bei Bob: entschlüsselt und prüft Signatur
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Schlüssel bei GPG}
+  \begin{columns}
+    \column{0.3\textwidth}
+    \begin{center}
+      \usebeamercolor{frametitle}
+      \begin{tikzpicture}[every node/.style={inner sep=0.2cm}]
+        \node (pub) {\texttt{pub}};
+        \node [right=of pub] (sec) {\texttt{sec}};
+        \node [above=of pub,yshift=-0.8cm] (label) {Schlüssel};
+
+        \node [fill=black!15!white,fit=(pub)(sec)(label),draw] (key) {};
+
+        % re-painting the nodes as they got visually killed by the filled fit node
+        \path (pub) node [fill=white,draw,rectangle,dashed] {\texttt{pub}};
+        \path (sec) node {\texttt{sec}};
+        \path (label) node [color=fg] {Schlüssel};
+      \end{tikzpicture}
+    \end{center}
+    \column{0.65\textwidth}
+    \begin{itemize}
+    \item Schlüsselpaar:
+    \item Öffentlicher Teil (\texttt{pub}): \\zum Verschlüsseln \\und Prüfen von Signaturen
+    \item Geheimer Teil (\texttt{sec}): \\zum Entschlüsseln \\und Erstellen von Signaturen
+    \item Zusätzlich: Informationen \\z.B. Name, E-Mail-Adresse
+    \end{itemize}
+  \end{columns}
+\end{frame}
+
+\begin{frame}
+  \frametitle{``Ich habe doch nichts zu verbergen''}
+  \framesubtitle{oder: warum man E-Mails verschlüsseln möchte und warum es trotzdem nichts bringt}
+
+  \begin{block}{Warum?}
+    \begin{itemize}
+    \item Jeder hat etwas zu verbergen (Kontonummer? Konto\emph{stand}?
+      Rechnungen? Beziehungen?)
+    \item Daten und Text werden oft unverschlüsselt\\via E-Mail übertragen
+    \end{itemize}
+  \end{block}
+  \pause
+  \begin{block}{Probleme}
+    \begin{itemize}
+    \item Selbst mit GPG wird nicht alles verschlüsselt
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Was ist (nicht) abgedeckt?}
+  \begin{columns}
+    \column[t]{0.45\textwidth}
+    \begin{block}{Sicher}
+      \begin{itemize}
+      \item Text
+      \item ggfs. Anhänge
+      \end{itemize}
+    \end{block}
+    \column[t]{0.45\textwidth}
+    \begin{block}{Unsicher}
+      \begin{itemize}
+      \item Absender (teilw.)
+      \item Empfänger
+      \item Datum
+      \item Betreff
+      \item und mehr
+      \end{itemize}
+    \end{block}
+  \end{columns}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Über Verschlüsselung hinaus: Signaturen}
+  GPG bietet auch Signaturen, digitale Unterschriften
+  \begin{itemize}
+  \item Deckt Text und ggfs. Anhänge ab
+  \item Manipulationen an Text und Anhängen sind erkennbar
+  \item Unterschrift ist mit dem Schlüssel assoziiert
+  \end{itemize}
+\end{frame}
+
+\end{document}
