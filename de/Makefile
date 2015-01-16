@@ -1,4 +1,4 @@
-TARGETS = $(subst /,,$(dir $(wildcard */*.tex)))
+TARGETS = $(filter-out tex-inc,$(subst /,,$(dir $(wildcard */*.tex))))
 
 all: $(TARGETS)
 

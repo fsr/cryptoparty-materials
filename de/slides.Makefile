@@ -2,7 +2,12 @@ PDFLATEX ?= lualatex -halt-on-error
 PDFLATEXFULL = $(PDFLATEX) -jobname build/$(TARGET) $(TARGET).tex
 VIEWER ?= xdg-open
 
-build/$(TARGET).pdf: $(TARGET).tex
+COMMONDEPS += $(wildcard ../../tex-inc/common/*.tex)
+COMMONDEPS += $(wildcard ../tex-inc/common/*.tex)
+COMMONDEPS += $(wildcard ../../tex-inc/beamer/*.tex)
+COMMONDEPS += $(wildcard ../tex-inc/beamer/*.tex)
+
+build/$(TARGET).pdf: $(TARGET).tex $(COMMONDEPS)
 	mkdir -p build
 	$(PDFLATEXFULL)
 
