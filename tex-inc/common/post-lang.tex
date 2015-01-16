@@ -1,2 +1,12 @@
 \usepackage{tikz}
-\usetikzlibrary{decorations,shapes,positioning,fit}
+\usetikzlibrary{decorations,shapes,positioning,fit,calc}
+
+% this is a cool hack to allow hiding parts of a tikz picture
+% see https://tex.stackexchange.com/a/155359/19369
+\tikzset{
+  invisible/.style={opacity=0},
+  visible on/.style={alt={#1{}{invisible}}},
+  alt/.code args={<#1>#2#3}{%
+    \alt<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}} % \pgfkeysalso doesn't change the path
+  },
+}

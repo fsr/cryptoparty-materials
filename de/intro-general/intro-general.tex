@@ -25,8 +25,8 @@
     und Vertrauen)
   \item Betriebssystemspezifische Einführungen in die Verwendung von GPG um
     E-Mails zu verschlüsseln
-  \item Gegenseitiger Austausch von Schlüsseln austauschen und gegenseitiges
-    Signieren
+  \item Gegenseitiger Austausch von Schlüsseln und \\gegenseitiges Signieren
+    (= Bestätigen der Identität)
   \end{enumerate}
   \end{block}
 \end{frame}
@@ -45,10 +45,10 @@
   \begin{block}{Übertragung}
     \begin{center}
       \begin{tikzpicture}
-        \path (0,0) node (alice) {\alice};
+        \path (0,0) node (alice) {\alice} node[above,yshift=0.6cm] {Alice};
         \path (1.5,0) node (gpg-alice) {GPG};
         \path (8.5,0) node (gpg-bob) {GPG};
-        \path (10,0) node (bob) {\bob};
+        \path (10,0) node (bob) {\bob} node[above,yshift=0.6cm] {Bob};
 
 
         \draw[-latex] (alice) -- (gpg-alice);
@@ -93,6 +93,51 @@
     \item Zusätzlich: Informationen \\z.B. Name, E-Mail-Adresse
     \end{itemize}
   \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Zweck der Schlüsselteile}
+    \begin{center}
+      \usebeamercolor{frametitle}
+      \begin{tikzpicture}[node distance=2cm,visible on=<2->]
+        \path node (alice) {\alice};
+        \path (alice.north) node[above] (alice label) {Alice};
+
+        \path[visible on=<3->] node (plainmsg) [right=of alice] {\includegraphics[width=1cm]{img-src/mail.pdf}};
+        \path[visible on=<5->] node (cryptmsg) [right=of plainmsg] {\includegraphics[width=1cm]{img-src/mail_locked.pdf}};
+        \path ($(plainmsg)!0.5!(cryptmsg)$) node[coordinate] (plaincryptcenter) {};
+
+        \path[visible on=<4->] node (key) [above=of plaincryptcenter,yshift=-1.5cm] {\includegraphics[width=1cm]{img-src/key1.pdf}};
+        \path[visible on=<4->] (key.west) node[left] (key label) {Bobs \texttt{pub}};
+
+        \draw[-latex,visible on=<3->] (alice) -- (plainmsg) node[below,pos=0.5] {schreibt};
+        \draw[-latex,visible on=<5->] (key) -- (plaincryptcenter);
+        \draw[-latex,visible on=<5->] (plainmsg) -- (cryptmsg) node[below,pos=0.5] {verschlüsseln};
+
+        \node [fit=(key)(alice label)(alice)(plainmsg)(cryptmsg),draw,dashed,color=fg] (alice box) {};
+        \path (alice box.north east) node[below left,color=fg] {privat};
+
+        \path[visible on=<6->] node (cryptmsg bob) [below=of cryptmsg] {\includegraphics[width=1cm]{img-src/mail_locked.pdf}};
+        \draw[double,-latex,visible on=<6->] (cryptmsg) -- (cryptmsg bob);
+
+        \path[visible on=<8->] node (plainmsg bob) [left=of cryptmsg bob] {\includegraphics[width=1cm]{img-src/mail.pdf}};
+
+        \path ($(plainmsg bob)!0.5!(cryptmsg bob)$) node[coordinate] (plaincryptcenter bob) {};
+
+        \path[visible on=<7->] node (key bob) [below=of plaincryptcenter bob,yshift=1.5cm] {\includegraphics[width=1cm]{img-src/key1.pdf}};
+        \path[visible on=<7->] (key bob.west) node[left] {Bobs \texttt{sec}};
+
+        \draw[-latex,visible on=<8->] (cryptmsg bob) -- (plainmsg bob) node[above,pos=0.5] {entschlüsseln};
+        \draw[-latex,visible on=<8->] (key bob) -- (plaincryptcenter bob);
+        \draw[-latex,visible on=<9->] (plainmsg bob) -- (bob) node[above,pos=0.5] {liest};
+
+        \path node (bob) [left=of plainmsg bob] {\bob};
+        \path (bob.north) node[above] (bob label) {Bob};
+
+        \node [fit=(key bob)(bob label)(bob)(plainmsg bob)(cryptmsg bob),draw,dashed,color=fg] (bob box) {};
+        \path (bob box.south east) node[above left,color=fg] {privat};
+      \end{tikzpicture}
+    \end{center}
 \end{frame}
 
 \begin{frame}
@@ -140,6 +185,12 @@
       \end{itemize}
     \end{block}
   \end{columns}
+  \pause
+  \begin{block}{Problem}
+    \begin{quote}
+      We kill based on metadata \emph{(CIA)}
+    \end{quote}
+  \end{block}
 \end{frame}
 
 \begin{frame}
