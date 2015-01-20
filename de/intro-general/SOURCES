@@ -1,0 +1,6 @@
+img-src/alice.svg: based on http://commons.wikimedia.org/wiki/File:Swapping_apples.svg
+img-src/bob.svg: based on http://commons.wikimedia.org/wiki/File:Swapping_apples.svg
+img-src/mail.svg: based on http://commons.wikimedia.org/wiki/File:Mail-closed.svg
+img-src/lock.svg: based on http://commons.wikimedia.org/wiki/File:Lock.svg
+img-src/mail_locked.svg: based on img-src/mail.svg img-src/lock.svg
+img-src/key1.svg: based on http://commons.wikimedia.org/wiki/File:Golden_key_icon.svg
