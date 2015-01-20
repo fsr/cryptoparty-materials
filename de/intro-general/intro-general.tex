@@ -107,7 +107,7 @@
         \path[visible on=<5->] node (cryptmsg) [right=of plainmsg] {\includegraphics[width=1cm]{img-src/mail_locked.pdf}};
         \path ($(plainmsg)!0.5!(cryptmsg)$) node[coordinate] (plaincryptcenter) {};
 
-        \path[visible on=<4->] node (key) [above=of plaincryptcenter,yshift=-1.5cm] {\includegraphics[width=1cm]{img-src/key1.pdf}};
+        \path[visible on=<4->] node (key) [above=of plaincryptcenter,yshift=-1.5cm] {\includegraphics[width=0.5cm]{img-src/lock.pdf}};
         \path[visible on=<4->] (key.west) node[left] (key label) {Bobs \texttt{pub}};
 
         \draw[-latex,visible on=<3->] (alice) -- (plainmsg) node[below,pos=0.5] {schreibt};
